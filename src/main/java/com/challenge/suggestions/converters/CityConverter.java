@@ -18,7 +18,7 @@ public class CityConverter {
 
         //Se convierte a Integer para compararlo en los 'if' más fácil
         Integer valor = dist.intValue();
-
+        
         if (valor < -1) {
             cityView.setScore(1.0);
             return cityView;
