@@ -9,14 +9,26 @@ import com.challenge.suggestions.views.CityView;
 @Component
 @Slf4j
 public class CityConverter {
-
+    /**
+     * Convierte el registro a view
+     * dependiendo de la distancia recibida en metros, se evalua en rangos de cientos de kilometros
+     * 100km -> score=1.0,
+     * 200km -> score=0.9,
+     * 300km -> score=0.8,
+     * ... 
+     * 900km -> score=0.1
+     * 
+     * @param city el registro que será procesado
+     * @param dist la distancia que nos servira para evaluar y asi asignar el valor del campo 'score'
+     * @return
+     */
     public CityView toView(City city, Double dist) {
         CityView cityView = new CityView();
         cityView.setName(city.getName());
         cityView.setLatitude(city.getLatitude().toString());
         cityView.setLongitude(city.getLongitude().toString());
 
-        //Se convierte a Integer para compararlo en los 'if' más fácil
+        // Se convierte a Integer para compararlo en los 'if' más fácil
         Integer valor = dist.intValue();
         
         if (valor < -1) {
