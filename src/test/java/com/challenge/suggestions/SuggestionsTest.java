@@ -24,7 +24,7 @@ public class SuggestionsTest extends SuggestionsTestConfiguration {
     @Test
     public void database() throws Exception {
         long cuenta = cityRepository.count();
-        assertEquals(199, cuenta);
+        assertEquals(7234, cuenta);
         log.info("Se cuentan registros: {}", cuenta);
     }
     /**
@@ -34,12 +34,12 @@ public class SuggestionsTest extends SuggestionsTestConfiguration {
     @Test
     public void getSuggestionsWithout() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/suggestions?q=A")
+                MockMvcRequestBuilders.get("/suggestions?q=Am")
                 .contentType(JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
 
-        log.info("Se ejecuto: /suggestions?q=A --->>> HTTP-status: 200(OK) --->>> Todos los  score son 1.0");
+        log.info("Se ejecuto: /suggestions?q=Am --->>> HTTP-status: 200(OK) --->>> Todos los  score son 1.0");
     }
 
     /**
@@ -49,12 +49,12 @@ public class SuggestionsTest extends SuggestionsTestConfiguration {
     @Test
     public void getSuggestionsWithLatitudeAndLongitude() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/suggestions?q=A&latitude=45.00000&longitude=-75.00000")
+                MockMvcRequestBuilders.get("/suggestions?q=Am&latitude=45.00000&longitude=-75.00000")
                 .contentType(JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
 
-        log.info("Se ejecuto: /suggestions?q=A&latitude=45.00000&longitude=-75.00000 --->>> HTTP-status: 200(OK)");
+        log.info("Se ejecuto: /suggestions?q=Am&latitude=45.00000&longitude=-75.00000 --->>> HTTP-status: 200(OK)");
     }
 
     /**

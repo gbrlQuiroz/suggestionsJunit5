@@ -45,16 +45,18 @@ public class SuggestionServiceImpl implements SuggestionService{
             List<CityView> cityListView = new ArrayList<>();
 
             //se recorrerá cada registro para procesarlo en el view y aplicarle el score basado en la distancia entre puntos
-            cityList.forEach(city -> {
-                if (lati != 0 && longi != 0) {
+            if(lati != 0 && longi !=0){
+                cityList.forEach(city -> {
                     // se calculará la distancia entre latitudes y longitudes para asignar el score
                     Double distancia = org.apache.lucene.util.SloppyMath.haversinMeters(city.getLatitude(), city.getLongitude(), lati, longi);
                     cityListView.add(cityConverter.toView(city, distancia));
-                } else {
+                });
+            } else {
+                cityList.forEach(city -> {
                     // si no nos dan la latitud y longitud es score es siempre 1.0, se evalua en el converter
                     cityListView.add(cityConverter.toView(city, -1.0));
-                }
-            });
+                });
+            }
 
             // se ordena de forma descendente
             cityListView.sort(Comparator.comparing(CityView::getScore).reversed());
