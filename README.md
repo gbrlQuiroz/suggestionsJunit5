@@ -25,7 +25,7 @@ The score is put if the distance is in a range each 100 kilometers like this:
 - Test doesn´t provide q parameter
 > mvn clean ; mvn test -Dtest=SuggestionsTest#getSuggestionsError
 
-## curl Test
+## curl Test (examples)
 - local
 curl --location --request GET 'http://localhost:8080/suggestions?q=A&latitude=45.00000&longitude=-75.00000'
 - google cloud
