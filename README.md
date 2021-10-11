@@ -10,8 +10,8 @@ The score is put if the distance is in a range each 100 kilometers like this:
 ## Notes
 - Java version 11
 - Database in memory populate it on fly
-- To run
-> mvn clean ; mvn spring-boot:run
+- To run local
+> mvn clean ; mvn -DskipTests spring-boot:run
 
 ## Unit Tests
 - To verify if records where load successfull
@@ -26,4 +26,7 @@ The score is put if the distance is in a range each 100 kilometers like this:
 > mvn clean ; mvn test -Dtest=SuggestionsTest#getSuggestionsError
 
 ## curl Test
+- local
 curl --location --request GET 'http://localhost:8080/suggestions?q=A&latitude=45.00000&longitude=-75.00000'
+- google cloud
+curl --location --request GET 'https://festive-radar-328716.uc.r.appspot.com/suggestions?q=Am&latitude=45.00000&longitude=-75.00000'
