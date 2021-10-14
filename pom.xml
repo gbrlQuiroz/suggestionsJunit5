@@ -69,6 +69,12 @@
 			<version>4.13.2</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- para poder utilizar pruebas unitarias con WebTestClient, NO se implementa nada rective-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
