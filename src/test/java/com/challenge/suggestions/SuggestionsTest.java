@@ -98,13 +98,22 @@ public class SuggestionsTest extends SuggestionsTestConfiguration {
      */
     @Test
     public void getSuggestionsError() throws Exception {
+        // mockMvc.perform(
+        // MockMvcRequestBuilders.get("/suggestions?latitude=45.00000&longitude=-75.00000").contentType(JSON))
+        // .andExpect(MockMvcResultMatchers.status()
+        // .isBadRequest())
+        // .andDo(MockMvcResultHandlers.print());
+
+        // log.info("Se ejecuto: /suggestions?latitude=45.00000&longitude=-75.00000 --->>> HTTP-status: 400(falta el parametro 'q')");
+
+
         mockMvc.perform(
-        MockMvcRequestBuilders.get("/suggestions/?latitude=45.00000&longitude=-75.00000").contentType(JSON))
+        MockMvcRequestBuilders.get("/suggestions?q=asdasdqwezxc").contentType(JSON))
         .andExpect(MockMvcResultMatchers.status()
-        .isBadRequest())
+        .isNotFound())
         .andDo(MockMvcResultHandlers.print());
 
-        log.info("Se ejecuto: /suggestions/?latitude=45.00000&longitude=-75.00000 --->>> HTTP-status: 400(falta el parametro 'q')");
+        log.info("Se ejecuto: /suggestions?q=asdasdqwezxc --->>> HTTP-status: 404(no existe)");
 
     }
 

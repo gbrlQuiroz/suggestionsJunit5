@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.challenge.suggestions.services.SuggestionService;
 import com.challenge.suggestions.views.SuggestionView;
 
+import com.challenge.suggestions.exceptions.*;
+
 
 @RestController
 @RequestMapping("suggestions")
-public class CityRest {
+public class SuggestionRest {
 
     private SuggestionService suggestionService;
 
@@ -25,11 +27,18 @@ public class CityRest {
     @GetMapping("")
     public ResponseEntity<SuggestionView> getSuggestions(@RequestParam(name = "q") String texto,
             @RequestParam(name = "latitude", required = false, defaultValue = "0") Double lati,
-            @RequestParam(name = "longitude", required = false, defaultValue = "0") Double longi) {
+            @RequestParam(name = "longitude", required = false, defaultValue = "0") Double longi)  {
 
         SuggestionView respuesta = suggestionService.getSuggestions(texto, lati, longi);
-        if (respuesta == null) {
-            return ResponseEntity.notFound().build();
+
+        // // Si se desea usar el error por default de mismo resposeEntity
+        // if (respuesta.getSuggestions().isEmpty()) {
+        //     log.error("No se encontró ningun registro");
+        //     return ResponseEntity.notFound().build();
+        // }
+
+        if (respuesta.getSuggestions().isEmpty()) {
+            throw new NotFoundException("No se encontró registro con valor: " + texto);
         }
 
         return ResponseEntity.ok(respuesta);
