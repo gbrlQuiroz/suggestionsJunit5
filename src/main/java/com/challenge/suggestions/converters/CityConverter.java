@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
 
 import com.challenge.suggestions.models.City;
-import com.challenge.suggestions.views.CityView;
+import com.challenge.suggestions.views.*;
 
 @Component
 @Slf4j
@@ -78,6 +78,25 @@ public class CityConverter {
 
         return null;
 
+    }
+
+    public City toEntity(CityCreateView cityCreateView) {
+        City city = new City();
+        city.setName(cityCreateView.getName());
+        city.setLatitude(cityCreateView.getLatitude());
+        city.setLongitude(cityCreateView.getLongitude());
+
+        return city;
+    }
+
+    public CityCreateView toViewCityCreate(City city) {
+        CityCreateView cCV = new CityCreateView();
+        cCV.setId(city.getId());
+        cCV.setName(city.getName());
+        cCV.setLatitude(city.getLatitude());
+        cCV.setLongitude(city.getLongitude());
+
+        return cCV;
     }
 
 }

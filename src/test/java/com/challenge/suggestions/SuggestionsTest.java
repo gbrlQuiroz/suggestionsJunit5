@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.challenge.suggestions.persistences.*;
+import com.challenge.suggestions.views.*;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,10 +40,11 @@ public class SuggestionsTest extends SuggestionsTestConfiguration {
      */
     @Test
     public void getSuggestionsWithout() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/suggestions?q=Am").contentType(JSON))
-                .andExpect(MockMvcResultMatchers.status()
-                .isOk())
-                .andDo(MockMvcResultHandlers.print());
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/suggestions?q=Am").contentType(JSON))
+        .andExpect(MockMvcResultMatchers.status()
+        .isOk())
+        .andDo(MockMvcResultHandlers.print());
 
         log.info("Se ejecuto: /suggestions?q=Am --->>> HTTP-status: 200(OK) --->>> Todos los  score son 1.0");
     }
@@ -56,10 +58,10 @@ public class SuggestionsTest extends SuggestionsTestConfiguration {
     @Test
     public void getSuggestionsWithLatitudeAndLongitude() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/suggestions?q=Am&latitude=45.00000&longitude=-75.00000").contentType(JSON))
-                .andExpect(MockMvcResultMatchers.status()
-                .isOk())
-                .andDo(MockMvcResultHandlers.print());
+            MockMvcRequestBuilders.get("/suggestions?q=Am&latitude=45.00000&longitude=-75.00000").contentType(JSON))
+        .andExpect(MockMvcResultMatchers.status()
+        .isOk())
+        .andDo(MockMvcResultHandlers.print());
 
         log.info("Se ejecuto: /suggestions?q=Am&latitude=45.00000&longitude=-75.00000 --->>> HTTP-status: 200(OK)");
     }
@@ -71,12 +73,13 @@ public class SuggestionsTest extends SuggestionsTestConfiguration {
      */
     @Test
     public void getSuggestionsOnlyOne() throws Exception {
-        String resultado = mockMvc.perform(MockMvcRequestBuilders.get("/suggestions?q=Ajax").contentType(JSON))
-                .andExpect(MockMvcResultMatchers.status()
-                .isOk())
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn()
-                .getResponse().getContentAsString();
+        String resultado = mockMvc.perform(
+                MockMvcRequestBuilders.get("/suggestions?q=Ajax").contentType(JSON))
+            .andExpect(MockMvcResultMatchers.status()
+            .isOk())
+            .andDo(MockMvcResultHandlers.print())
+            .andReturn()
+            .getResponse().getContentAsString();
 
         log.info("Se ejecuto: /suggestions?q=Ajax --->>> HTTP-status: 200(OK)");
 
@@ -108,12 +111,33 @@ public class SuggestionsTest extends SuggestionsTestConfiguration {
 
 
         mockMvc.perform(
-        MockMvcRequestBuilders.get("/suggestions?q=asdasdqwezxc").contentType(JSON))
+            MockMvcRequestBuilders.get("/suggestions?q=asdasdqwezxc").contentType(JSON))
         .andExpect(MockMvcResultMatchers.status()
         .isNotFound())
         .andDo(MockMvcResultHandlers.print());
 
         log.info("Se ejecuto: /suggestions?q=asdasdqwezxc --->>> HTTP-status: 404(no existe)");
+
+    }
+
+
+    /**
+     * Probar POST
+     * 
+     * mvn clean ; mvn test -Dtest=SuggestionsTest#postCity
+     */
+    @Test 
+    public void postCity() throws Exception {
+        CityCreateView cCV = new CityCreateView();
+        cCV.setName("Pachuca de Soto");
+        cCV.setLatitude(333.333);
+        cCV.setLongitude(999.999);
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/suggestions/city").contentType(JSON)
+            .content(MAPPER.writeValueAsString(cCV)))
+        .andExpect(MockMvcResultMatchers.status().isCreated())
+        .andDo(MockMvcResultHandlers.print());
 
     }
 

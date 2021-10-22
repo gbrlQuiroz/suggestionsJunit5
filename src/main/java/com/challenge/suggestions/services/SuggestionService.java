@@ -1,6 +1,6 @@
 package com.challenge.suggestions.services;
 
-import com.challenge.suggestions.views.SuggestionView;
+import com.challenge.suggestions.views.*;
 
 public interface SuggestionService {
     /**
@@ -11,6 +11,13 @@ public interface SuggestionService {
      * @param longi longitud para calcular el score
      * @return la view donde se encuentra el atributo List de todas las sugerencias
      */
-    public SuggestionView getSuggestions(String texto, Double lati, Double longi);
+    public SuggestionView readSuggestions(String texto, Double lati, Double longi);
+
+    /**
+     * Crear una ciudad para las sugerencias
+     * @param cCV la vista que es identica en campos al entity (tiene el ID necesario a regresar)
+     * @return la view completa identica al entity
+     */
+    public CityCreateView createCity(CityCreateView cCV);
     
 }

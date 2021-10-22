@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.challenge.suggestions.models.City;
-import com.challenge.suggestions.views.CityView;
-import com.challenge.suggestions.views.SuggestionView;
+import com.challenge.suggestions.views.*;
 import com.challenge.suggestions.persistences.CityRepository;
 import com.challenge.suggestions.services.SuggestionService;
 import com.challenge.suggestions.converters.CityConverter;
@@ -37,7 +36,7 @@ public class SuggestionServiceImpl implements SuggestionService{
     }
 
     @Override
-    public SuggestionView getSuggestions(String texto, Double lati, Double longi) {
+    public SuggestionView readSuggestions(String texto, Double lati, Double longi) {
         try {
             // obtenemos de la DB los registros
             List<City> cityList = cityRepository.findByNameContains(texto);
@@ -67,9 +66,21 @@ public class SuggestionServiceImpl implements SuggestionService{
             return suggestion;
 
         } catch (Exception ex) {
-            log.error("--->>>CityServiceImpl--->>exception: {}",ex.getMessage());
+            log.error("--->>>CityServiceImpl--->>readSuggestions--->>>exception: {}",ex.getMessage());
             return null;
         }
+    }
 
+    @Override
+    public CityCreateView createCity(CityCreateView cCV) {
+        try {
+            City city = cityConverter.toEntity(cCV);
+            cityRepository.save(city);
+            return cityConverter.toViewCityCreate(city);
+
+        } catch(Exception ex) {
+            log.error("--->>>CityServiceImpl--->postSuggestion--->>>exception: {}",ex.getMessage());
+            return null;
+        }
     }
 }
