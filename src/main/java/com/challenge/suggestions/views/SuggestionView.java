@@ -13,6 +13,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class SuggestionView implements Serializable {
-    private List<CityView> suggestions;
+    private List<CitySuggestionView> suggestions;
 
 }

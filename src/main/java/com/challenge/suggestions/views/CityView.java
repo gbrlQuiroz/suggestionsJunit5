@@ -12,9 +12,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class CityView implements Serializable {
+    private Long id;
     private String name;
-    private String latitude;
-    private String longitude;
-    private Double score;
+    private Double latitude;
+    private Double longitude;
 
 }
+

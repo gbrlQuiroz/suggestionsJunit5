@@ -14,7 +14,7 @@ import com.challenge.suggestions.views.*;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class SuggestionsTest extends SuggestionsTestConfiguration {
+public class SuggestionTest extends SuggestionsTestConfiguration {
 
     @Autowired
     private CityRepository cityRepository;
@@ -36,7 +36,7 @@ public class SuggestionsTest extends SuggestionsTestConfiguration {
      * Probar endpoint sin parametros de latitud y longitud en todos los elemento el
      * campos 'score' de ser 1.0
      * 
-     * mvn clean ; mvn test -Dtest=SuggestionsTest#getSuggestionsWithout    
+     * mvn clean ; mvn test -Dtest=SuggestionsTest#getSuggestionsWithout
      */
     @Test
     public void getSuggestionsWithout() throws Exception {
@@ -117,27 +117,6 @@ public class SuggestionsTest extends SuggestionsTestConfiguration {
         .andDo(MockMvcResultHandlers.print());
 
         log.info("Se ejecuto: /suggestions?q=asdasdqwezxc --->>> HTTP-status: 404(no existe)");
-
-    }
-
-
-    /**
-     * Probar POST
-     * 
-     * mvn clean ; mvn test -Dtest=SuggestionsTest#postCity
-     */
-    @Test 
-    public void postCity() throws Exception {
-        CityCreateView cCV = new CityCreateView();
-        cCV.setName("Pachuca de Soto");
-        cCV.setLatitude(333.333);
-        cCV.setLongitude(999.999);
-
-        mockMvc.perform(
-            MockMvcRequestBuilders.post("/suggestions/city").contentType(JSON)
-            .content(MAPPER.writeValueAsString(cCV)))
-        .andExpect(MockMvcResultMatchers.status().isCreated())
-        .andDo(MockMvcResultHandlers.print());
 
     }
 

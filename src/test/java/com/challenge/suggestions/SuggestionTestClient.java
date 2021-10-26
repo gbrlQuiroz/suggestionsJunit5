@@ -27,7 +27,7 @@ import com.challenge.suggestions.views.SuggestionView;
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 // We create a `@SpringBootTest`, starting an actual server on a `RANDOM_PORT`
-public class SuggestionsTestClient {
+public class SuggestionTestClient {
 
     // Spring Boot will create a `WebTestClient` for you,
     // already configure and ready to issue requests against "localhost:RANDOM_PORT"
