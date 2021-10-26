@@ -30,6 +30,7 @@ public class CitySuggestionConverter {
 
         // Se convierte a Integer para compararlo en los 'if' más fácil
         Integer valor = dist.intValue();
+        log.debug("--->>>CitySuggestionConverter--->>>toView()--->>>citySuggestionView: {}",cSV);
         
         if (valor < -1) {
             cSV.setScore(1.0);
