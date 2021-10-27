@@ -28,3 +28,7 @@ The score is put if the distance is in a range each 100 kilometers like this:
 ### curl Test (examples)
 - local
 > `curl --location --request GET 'http://localhost:8080/suggestions?q=A&latitude=45.00000&longitude=-75.00000'`
+
+
+### Extras
+mvn clean ; mvn compile

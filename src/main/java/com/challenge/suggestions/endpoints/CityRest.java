@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import com.challenge.suggestions.services.CityService;
 import com.challenge.suggestions.views.*;
 
+import javax.validation.Valid;
+
 // import java.net.URI;
 
 import com.challenge.suggestions.exceptions.*;
@@ -30,7 +32,7 @@ public class CityRest {
 
 
     @PostMapping("")
-    public ResponseEntity<CityView> createCity(@RequestBody CityView cityView) {
+    public ResponseEntity<CityView> createCity(@Valid @RequestBody CityView cityView) {
         CityView cV = cityService.createCity(cityView);
         if (cV == null) {
             return ResponseEntity.notFound().build();

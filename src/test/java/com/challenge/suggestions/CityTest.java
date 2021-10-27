@@ -53,4 +53,25 @@ public class CityTest extends SuggestionsTestConfiguration {
 
     }
 
+
+    /**
+     * Probar POST para crer un registro de City
+     * 
+     * mvn clean ; mvn test -Dtest=CityTest#postCityError400
+     */
+    @Test 
+    public void postCityError400() throws Exception {
+        CityView cV = new CityView();
+        // cV.setName("Pachuca de Soto");
+        // cV.setLatitude(333.333);
+        // cV.setLongitude(999.999);
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/city").contentType(JSON)
+            .content(MAPPER.writeValueAsString(cV)))
+        .andExpect(MockMvcResultMatchers.status().isBadRequest())
+        .andDo(MockMvcResultHandlers.print());
+
+    }
+
 }

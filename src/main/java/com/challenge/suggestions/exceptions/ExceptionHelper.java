@@ -1,6 +1,10 @@
 package com.challenge.suggestions.exceptions;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +22,17 @@ public class ExceptionHelper {
         return new ResponseEntity<Object>(ex.getMessage(), ex.getStatus());
     }
 
-    // exception especifica que siempre regresa 404
+    // genera el listado de que campos presentan errores y regresa un 400 
+    @ExceptionHandler(value = {MethodArgumentNotValidException.class})
+    public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+                errors.put(error.getField(), error.getDefaultMessage()));
+        return new ResponseEntity<Object>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+
+    // exception específica que siempre regresa 404
     @ExceptionHandler(value = { NotFoundException.class })
     public ResponseEntity<Object> handleNotFoundtException(NotFoundException ex) {
         log.warn("{}", ex.getMessage());
