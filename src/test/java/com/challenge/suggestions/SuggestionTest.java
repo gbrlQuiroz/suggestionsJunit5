@@ -9,7 +9,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.challenge.suggestions.persistences.*;
-import com.challenge.suggestions.views.*;
+// import com.challenge.suggestions.views.*;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,7 +23,7 @@ public class SuggestionTest extends SuggestionsTestConfiguration {
     /**
      * Probar que se cargen todos los registros en la base en memoria
      * 
-     * mvn clean ; mvn test -Dtest=SuggestionsTest#database
+     * mvn clean ; mvn test -Dtest=SuggestionTest#database
      */
     @Test
     public void database() throws Exception {
@@ -36,7 +36,7 @@ public class SuggestionTest extends SuggestionsTestConfiguration {
      * Probar endpoint sin parametros de latitud y longitud en todos los elemento el
      * campos 'score' de ser 1.0
      * 
-     * mvn clean ; mvn test -Dtest=SuggestionsTest#getSuggestionsWithout
+     * mvn clean ; mvn test -Dtest=SuggestionTest#getSuggestionsWithout
      */
     @Test
     public void getSuggestionsWithout() throws Exception {
@@ -53,7 +53,7 @@ public class SuggestionTest extends SuggestionsTestConfiguration {
      * Probar endpoint con latitud y longitud el campo 'score' es asignado siguiendo
      * las regla de negocio
      * 
-     * mvn clean ; mvn test -Dtest=SuggestionsTest#getSuggestionsWithLatitudeAndLongitude
+     * mvn clean ; mvn test -Dtest=SuggestionTest#getSuggestionsWithLatitudeAndLongitude
      */
     @Test
     public void getSuggestionsWithLatitudeAndLongitude() throws Exception {
@@ -69,7 +69,7 @@ public class SuggestionTest extends SuggestionsTestConfiguration {
     /**
      * Probar endpoint con un criterio exacto
      * 
-     * mvn clean ; mvn test -Dtest=SuggestionsTest#getSuggestionsOnlyOne
+     * mvn clean ; mvn test -Dtest=SuggestionTest#getSuggestionsOnlyOne
      */
     @Test
     public void getSuggestionsOnlyOne() throws Exception {
@@ -97,7 +97,7 @@ public class SuggestionTest extends SuggestionsTestConfiguration {
      * Probar con error, no se esta poniendo el parametro requerido 'q' regresa 400
      * bad request
      * 
-     * mvn clean ; mvn test -Dtest=SuggestionsTest#getSuggestionsError
+     * mvn clean ; mvn test -Dtest=SuggestionTest#getSuggestionsError
      */
     @Test
     public void getSuggestionsError() throws Exception {

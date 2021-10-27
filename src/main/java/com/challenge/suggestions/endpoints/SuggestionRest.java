@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpStatus;
+
 
 import com.challenge.suggestions.services.SuggestionService;
 import com.challenge.suggestions.views.*;
@@ -32,7 +34,11 @@ public class SuggestionRest {
         SuggestionView respuesta = suggestionService.readSuggestions(texto, lati, longi);
 
         if (respuesta.getSuggestions().isEmpty()) {
-            throw new NotFoundException("No se encontró registro con valor: " + texto);
+            // // exception especifica NotFoundException
+            // throw new NotFoundException("No se encontró registro con valor: " + texto);
+            
+            // exception genérica
+            throw new ResponseException("No se encontró registro con valor: " + texto, HttpStatus.NOT_FOUND);
         }
 
         return ResponseEntity.ok(respuesta);
