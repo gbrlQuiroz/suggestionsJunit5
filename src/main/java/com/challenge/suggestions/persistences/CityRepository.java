@@ -14,4 +14,6 @@ public interface CityRepository extends JpaRepository<City, Long> {
     // buscar por campo 'name' con LIKE
     List<City> findByNameContains(@NotNull String name);
 
+    City findByName(@NotNull String name);
+
 }

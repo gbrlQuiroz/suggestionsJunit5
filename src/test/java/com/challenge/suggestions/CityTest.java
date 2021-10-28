@@ -34,7 +34,7 @@ public class CityTest extends SuggestionsTestConfiguration {
 
 
     /**
-     * Probar POST para crer un registro de City
+     * Probar POST para crear un registro de City
      * 
      * mvn clean ; mvn test -Dtest=CityTest#postCity
      */
@@ -55,7 +55,7 @@ public class CityTest extends SuggestionsTestConfiguration {
 
 
     /**
-     * Probar POST para crer un registro de City
+     * Probar POST con error 400
      * 
      * mvn clean ; mvn test -Dtest=CityTest#postCityError400
      */
@@ -70,6 +70,27 @@ public class CityTest extends SuggestionsTestConfiguration {
             MockMvcRequestBuilders.post("/city").contentType(JSON)
             .content(MAPPER.writeValueAsString(cV)))
         .andExpect(MockMvcResultMatchers.status().isBadRequest())
+        .andDo(MockMvcResultHandlers.print());
+
+    }
+
+
+    /**
+     * Probar POST con error 409
+     * 
+     * mvn clean ; mvn test -Dtest=CityTest#postCityError409
+     */
+    @Test 
+    public void postCityError409() throws Exception {
+        CityView cV = new CityView();
+        cV.setName("Beloeil");
+        cV.setLatitude(333.333);
+        cV.setLongitude(999.999);
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/city").contentType(JSON)
+            .content(MAPPER.writeValueAsString(cV)))
+        .andExpect(MockMvcResultMatchers.status().isConflict())
         .andDo(MockMvcResultHandlers.print());
 
     }
