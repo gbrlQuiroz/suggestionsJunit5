@@ -2,8 +2,10 @@ package com.challenge.suggestions.endpoints;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
 // import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.HttpStatus;
@@ -47,5 +49,11 @@ public class CityRest {
 
             // return ResponseEntity.created(uri).body(cV);
         }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CityView> updateCity(@PathVariable Long id, @Valid @RequestBody CityView cityView) {
+        cityView.setId(id);
+        return new ResponseEntity<CityView>(cityService.updateCity(cityView), HttpStatus.OK);
     }
 }

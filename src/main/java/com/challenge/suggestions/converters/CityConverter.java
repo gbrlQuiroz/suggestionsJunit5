@@ -10,8 +10,7 @@ import com.challenge.suggestions.views.*;
 @Slf4j
 public class CityConverter {
     
-    public City toEntity(CityView cityCreateView) {
-        City city = new City();
+    public City toEntity(CityView cityCreateView, City city) {
         city.setName(cityCreateView.getName());
         city.setLatitude(cityCreateView.getLatitude());
         city.setLongitude(cityCreateView.getLongitude());

@@ -7,7 +7,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
+
+import com.challenge.suggestions.models.City;
 import com.challenge.suggestions.persistences.*;
 import com.challenge.suggestions.views.*;
 
@@ -91,6 +94,61 @@ public class CityTest extends SuggestionsTestConfiguration {
             MockMvcRequestBuilders.post("/city").contentType(JSON)
             .content(MAPPER.writeValueAsString(cV)))
         .andExpect(MockMvcResultMatchers.status().isConflict())
+        .andDo(MockMvcResultHandlers.print());
+
+    }
+
+
+    /**
+     * Probar PUT 
+     * 
+     * mvn clean ; mvn test -Dtest=CityTest#putCity
+     */
+    @Test
+    @Transactional(readOnly = true) 
+    public void putCity() throws Exception {
+        CityView cV = new CityView();
+        cV.setName("Pachuca");
+        cV.setLatitude(333.333);
+        cV.setLongitude(999.999);
+
+        Long id = 5882873L;
+
+        City tempo = cityRepository.getById(id);
+        log.info("Before--->>>city: {}",tempo);
+        assertEquals("Ajax", tempo.getName());
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.put("/city/{id}",id).contentType(JSON)
+            .content(MAPPER.writeValueAsString(cV)))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andDo(MockMvcResultHandlers.print());
+
+        
+        tempo = cityRepository.getById(id);
+        log.info("After--->>>city: {}",tempo);
+        assertEquals("Pachuca", tempo.getName());
+
+    }
+
+    /**
+     * Probar PUT 
+     * 
+     * mvn clean ; mvn test -Dtest=CityTest#putCityError404
+     */
+    @Test
+    public void putCityError404() throws Exception {
+        CityView cV = new CityView();
+        cV.setName("Pachuca");
+        cV.setLatitude(333.333);
+        cV.setLongitude(999.999);
+
+        Long id = 369L;
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.put("/city/{id}",id).contentType(JSON)
+            .content(MAPPER.writeValueAsString(cV)))
+        .andExpect(MockMvcResultMatchers.status().isNotFound())
         .andDo(MockMvcResultHandlers.print());
 
     }
