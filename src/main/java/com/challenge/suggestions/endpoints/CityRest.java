@@ -40,6 +40,7 @@ public class CityRest {
             return ResponseEntity.notFound().build();
         } else {
             return new ResponseEntity<CityView>(cV, HttpStatus.CREATED);
+            // return ResponseEntity.status(HttpStatus.CREATED).body(cV);
             
             // // Si se desea construir HATEOAS
             // URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
