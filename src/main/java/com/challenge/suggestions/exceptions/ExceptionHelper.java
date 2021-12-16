@@ -38,5 +38,13 @@ public class ExceptionHelper {
         log.error("{}", ex.getMessage());
         return new ResponseEntity<Object>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+
+    // exception 500 
+    @ExceptionHandler(value = { Exception.class })
+    public ResponseEntity<Object> handleException(Exception ex) {
+        log.error("{}", ex.getMessage());
+        return new ResponseEntity<Object>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
     
 }
