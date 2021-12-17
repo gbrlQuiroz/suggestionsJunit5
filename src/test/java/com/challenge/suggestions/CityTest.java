@@ -2,7 +2,9 @@ package com.challenge.suggestions;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+// import org.junit.Test; //Junit4
+import org.junit.jupiter.api.Test; //Junit5
+
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;

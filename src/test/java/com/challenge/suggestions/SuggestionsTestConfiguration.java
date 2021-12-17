@@ -11,7 +11,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+// @RunWith(SpringJUnit4ClassRunner.class)
 @AutoConfigureMockMvc()
 @TestPropertySource(locations = {"classpath:application-test.properties"})
 @SpringBootTest(classes = {SuggestionsApplication.class})
