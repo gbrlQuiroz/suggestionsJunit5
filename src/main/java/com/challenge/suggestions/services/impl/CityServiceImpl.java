@@ -16,11 +16,11 @@ import com.challenge.suggestions.persistences.CityRepository;
 
 import com.challenge.suggestions.exceptions.*;
 
-import lombok.extern.slf4j.Slf4j;
+// import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional(readOnly = true)
-@Slf4j
+// @Slf4j
 public class CityServiceImpl implements CityService {
 
     private CityRepository cityRepository;

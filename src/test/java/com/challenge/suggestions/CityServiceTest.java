@@ -27,6 +27,7 @@ import static org.mockito.BDDMockito.given;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.challenge.suggestions.converters.CityConverter;
 import com.challenge.suggestions.models.City;
@@ -73,19 +74,34 @@ public class CityServiceTest {
     // mvn clean ; mvn test -Dtest=CityServiceTest#shouldThrowErrorWhenSaveCityWithExistingName
     @Test
     void shouldThrowErrorWhenSaveCityWithExistingName() {
-        // given
+        // ********* VERSION 1 *********
+        // // given
+        // City city = new City(1L, "Pachuca", 33.333, 99.999);
+        // CityView cV = new CityView(1L, "Pachuca", 33.333, 99.999);
+
+        // // when
+        // when(cityRepository.findByName(anyString())).thenReturn(city);
+
+        // // then
+        // assertThrows(ResponseException.class, () -> {
+        //     underTest.createCity(cV);
+        // });
+        // verify(cityRepository, never()).save(any(City.class));
+
+        // ********* VERSION 2 *********
+        //given 
         City city = new City(1L, "Pachuca", 33.333, 99.999);
         CityView cV = new CityView(1L, "Pachuca", 33.333, 99.999);
+        given(cityRepository.findByName(anyString())).willReturn(city);
 
         // when
-        when(cityRepository.findByName(anyString())).thenReturn(city);
 
-        // then
-        assertThrows(ResponseException.class, () -> {
-            underTest.createCity(cV);
-        });
+        //then
+        assertThatThrownBy(() -> underTest.createCity(cV))
+                .isInstanceOf(ResponseException.class)
+                .hasMessageContaining("Ya existe un registro con este nombre: " + cV.getName());
 
-        verify(cityRepository, never()).save(any(City.class));
+        verify(cityRepository, never()).save(any());
 
     }
 
@@ -143,5 +159,25 @@ public class CityServiceTest {
 
         verify(cityRepository, never()).save(any(City.class));
 
+    }
+
+    // mvn clean ; mvn test -Dtest=CityServiceTest#canAddStudent
+    @Test
+    void canAddStudent() {
+        // given
+        City city = new City(1L, "Pachuca", 33.333, 99.999);
+        CityView cV = new CityView(1L, "Pachuca", 33.333, 99.999);
+
+        // when
+        underTest.createCity(cV);
+
+        // then
+        ArgumentCaptor<City> argumentCaptor = ArgumentCaptor.forClass(City.class);
+
+        verify(cityRepository).save(argumentCaptor.capture());
+
+        City capturedCity = argumentCaptor.getValue();
+
+        assertThat(capturedCity).isEqualTo(city);
     }
 }
